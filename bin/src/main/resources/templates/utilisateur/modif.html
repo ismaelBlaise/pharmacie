@@ -1,0 +1,76 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Modifier Utilisateur</h5>
+                </div>
+                
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/utilisateurs/modifier" method="POST">
+                        <input type="hidden" id="idUtilisateur" name="idUtilisateur" th:value="${utilisateur.idUtilisateur}">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" th:value="${utilisateur.nom}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prenom" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" id="prenom" name="prenom" th:value="${utilisateur.prenom}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" th:value="${utilisateur.email}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adresse" class="form-label">Adresse</label>
+                            <input type="text" class="form-control" id="adresse" name="adresse" th:value="${utilisateur.adresse}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mdp" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="mdp" name="mdp"  >
+                        </div>
+                        <div class="mb-3">
+                            <label for="poids" class="form-label">Poids (kg)</label>
+                            <input type="number" class="form-control" id="poids" name="poids" th:value="${utilisateur.poids}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateNaissance" class="form-label">Date de Naissance</label>
+                            <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" th:value="${#dates.format(utilisateur.dateNaissance, 'yyyy-MM-dd')}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">Rôle</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <!-- Remplissage dynamique des rôles -->
+                                <th:block th:each="role : ${roles}">
+                                    <option th:value="${role.idRole}" th:selected="${role.idRole == utilisateur.role.idRole}" th:text="${role.role}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="sexe" class="form-label">Sexe</label>
+                            <select class="form-select" id="sexe" name="sexe" required>
+                                <!-- Remplissage dynamique des sexes -->
+                                <th:block th:each="sexe : ${sexes}">
+                                    <option th:value="${sexe.idSexe}" th:selected="${sexe.idSexe == utilisateur.sexe.idSexe}" th:text="${sexe.sexe}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <a href="/utilisateurs">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,34 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Selectioner maladie</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/traitements/recuperer" method="POST" enctype="multipart/form-data">
+                        
+                        <div class="mb-3">
+                            <label for="maladie" class="form-label">Maladie </label>
+                            <select class="form-select" id="idMaladie" name="idMaladie" required>
+                                <th:block th:each="maladie : ${maladies}">
+                                    <option th:value="${maladie.idMaladie}" th:text="${maladie.maladie}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Voir traitements</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

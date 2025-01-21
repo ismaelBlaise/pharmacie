@@ -1,0 +1,42 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Ajouter une composition</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/medicaments-compositions" method="POST" enctype="multipart/form-data">
+                       
+                        <input type="hidden" name="idMedicamentFiche" th:value="${fiche.idMedicamentFiche}">
+                        <div class="mb-3">
+                            <label for="composition" class="form-label">Composition</label>
+                            <select class="form-select" id="composition" name="idComposition" required>
+                                <th:block th:each="composition : ${compositions}">
+                                    <option th:value="${composition.idComposition}" th:text="${composition.nom}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                         
+                         <div class="mb-3">
+                            <label for="poid" class="form-label">Poid (mg)</label>
+                            <input type="number" class="form-control" step="0.01" id="poid" name="poid" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <a th:href="@{/medicaments-compositions/recuperer(idMedicamentFiche=${fiche.idMedicamentFiche})}">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

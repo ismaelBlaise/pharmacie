@@ -1,0 +1,33 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Modifier voie d'administration</h5>
+                </div>
+                
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/voies-administration/modifier" method="POST">
+                        <input type="hidden" id="idVoieAdministration" name="idVoieAdministration" th:value="${voie.idVoieAdministration}">
+                        <div class="mb-3">
+                            <label for="voieAdministration" class="form-label">voieAdministration</label>
+                            <input type="text" class="form-control" id="voieAdministration" name="voieAdministration" th:value="${voie.voieAdministration}" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <a href="/voies-administration">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

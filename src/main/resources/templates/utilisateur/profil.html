@@ -1,0 +1,175 @@
+<section class="section profile">
+    <div class="row">
+      <div class="col-xl-4">
+
+        <div class="card">
+          <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+            <img src="/assets/img/3.png" alt="Profile" class="rounded-circle">
+            <h2  th:text="${session.utilisateur.nom} + ' ' + ${session.utilisateur.prenom}" ></h2>
+            <h3  th:text="${session.utilisateur.role.role}"  ></h3>
+            <!-- <div class="social-links mt-2">
+              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div> -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-xl-8">
+
+        <div class="card">
+          <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+
+              <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">informations</button>
+              </li>
+
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Modifier profil</button>
+              </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                
+                <h5 class="card-title">Details profil</h5>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label " >Nom complet</div>
+                  <div class="col-lg-9 col-md-8"  th:text="${session.utilisateur.nom} + ' ' + ${session.utilisateur.prenom}" ></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Adresse</div>
+                  <div class="col-lg-9 col-md-8"  th:text="${session.utilisateur.adresse}"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Date de naissance</div>
+                  <div class="col-lg-9 col-md-8"  th:text="${session.utilisateur.dateNaissance}"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8"  th:text="${session.utilisateur.email}"></div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Poid</div>
+                  <div class="col-lg-9 col-md-8" th:text="${session.utilisateur.poids}+'(kg)'"> </div>
+                </div>
+
+              </div>
+
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                <!-- Profile Edit Form -->
+                <div class="row">
+                    
+                        <!-- Card -->
+                        
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                          <p th:text="${error}"></p>
+                      </div>
+                      <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                          <p th:text="${success}"></p>
+                      </div>
+                      <form action="/utilisateurs/modifier2" method="POST">
+                          <input type="hidden" id="idUtilisateur" name="idUtilisateur" th:value="${utilisateur.idUtilisateur}">
+                          <div class="mb-3">
+                              <label for="nom" class="form-label">Nom</label>
+                              <input type="text" class="form-control" id="nom" name="nom" th:value="${utilisateur.nom}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="prenom" class="form-label">Prénom</label>
+                              <input type="text" class="form-control" id="prenom" name="prenom" th:value="${utilisateur.prenom}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="email" class="form-label">Email</label>
+                              <input type="email" class="form-control" id="email" name="email" th:value="${utilisateur.email}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="adresse" class="form-label">Adresse</label>
+                              <input type="text" class="form-control" id="adresse" name="adresse" th:value="${utilisateur.adresse}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="mdp" class="form-label">Mot de passe</label>
+                              <input type="password" class="form-control" id="mdp" name="mdp" style="width: 90%;">
+                              <button  id="mdpShow"style="background: none; border-radius: 10px; float: right; margin-top: -33px;" onclick="togglePassword()" type="button" class="bi bi-eye-fill"></button>
+                          </div>
+                          
+                          <script>
+                              function togglePassword() {
+                                  var passwordField = document.getElementById('mdp'); 
+                                  var passwordType = passwordField.type;
+                          
+                                  if (passwordType === 'password') {
+                                      passwordField.type = 'text';  
+                                  } else {
+                                      passwordField.type = 'password';  
+                                  }
+                                  var mdpShow=document.getElementById("mdpShow");
+                                  if(mdpShow.className==="bi bi-eye-fill"){
+                                      mdpShow.className="bi bi-eye-slash-fill";
+                                  }
+                                  else{
+                                      mdpShow.className="bi bi-eye-fill";
+                                  }
+                              }
+                          </script>
+                        
+                          <div class="mb-3">
+                              <label for="poids" class="form-label">Poids (kg)</label>
+                              <input type="number" class="form-control" id="poids" name="poids" th:value="${utilisateur.poids}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="dateNaissance" class="form-label">Date de Naissance</label>
+                              <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" th:value="${#dates.format(utilisateur.dateNaissance, 'yyyy-MM-dd')}" required>
+                          </div>
+                          <div class="mb-3">
+                              <label for="role" class="form-label">Rôle</label>
+                              <select class="form-select" id="role" name="role" required>
+                                  <!-- Remplissage dynamique des rôles -->
+                                  <th:block th:each="role : ${roles}">
+                                      <option th:value="${role.idRole}" th:selected="${role.idRole == utilisateur.role.idRole}" th:text="${role.role}"></option>
+                                  </th:block>
+                              </select>
+                          </div>
+                          
+                          <div class="mb-3">
+                              <label for="sexe" class="form-label">Sexe</label>
+                              <select class="form-select" id="sexe" name="sexe" required>
+                                  <!-- Remplissage dynamique des sexes -->
+                                  <th:block th:each="sexe : ${sexes}">
+                                      <option th:value="${sexe.idSexe}" th:selected="${sexe.idSexe == utilisateur.sexe.idSexe}" th:text="${sexe.sexe}"></option>
+                                  </th:block>
+                              </select>
+                          </div>
+                          
+                          <button type="submit" class="btn btn-primary">Modifier</button>
+                      </form>
+                            </div>
+                        
+                    </div>
+                
+
+              </div>
+
+              
+              
+
+            </div> 
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>

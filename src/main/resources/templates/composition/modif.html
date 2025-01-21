@@ -1,0 +1,38 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Modifier Composition</h5>
+                </div>
+                
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/compositions/modifier" method="POST">
+                        <input type="hidden" id="idComposition" name="idComposition" th:value="${composition.idComposition}">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" th:value="${composition.nom}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" id="description" name="description" th:value="${composition.description}" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <a href="/compositions">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,47 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Ajouter un symptome</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/maladies-symptomes" method="POST" enctype="multipart/form-data">
+                       
+                        <input type="hidden" name="idMaladie" th:value="${maladie.idMaladie}">
+                        <div class="mb-3">
+                            <label for="symptome" class="form-label">symptome</label>
+                            <select class="form-select" id="symptome" name="idSymptome" required>
+                                <th:block th:each="symptome : ${symptomes}">
+                                    <option th:value="${symptome.idSymptome}" th:text="${symptome.symptome}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                         
+                         <div class="mb-3">
+                            <label for="gravite" class="form-label">Gravite</label>
+                            <input type="number" class="form-control" id="gravite" name="gravite" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="frequence" class="form-label">frequence (/j)</label>
+                            <input type="number" class="form-control" id="frequence" name="frequence" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <a th:href="@{/maladies-symptomes/recuperer(idMaladie=${maladie.idMaladie})}">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

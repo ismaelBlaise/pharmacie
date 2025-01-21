@@ -1,0 +1,48 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Ajouter une recommandation</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/recommandations/ajouter" method="POST" enctype="multipart/form-data">
+                       
+                        <div class="mb-3">
+                            <label for="medicament" class="form-label">Medicament</label>
+                            <select class="form-select" id="medicament" name="idMedicamentFiche" required>
+                                <th:block th:each="fiche : ${fiches}">
+                                    <option th:value="${fiche.idMedicamentFiche}" th:text="${fiche.medicament.nomCommercial}+','+${fiche.dosage}+' mg,'+${fiche.forme.forme}+','+${fiche.typeMedicament.typeMedicament}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+
+                        
+                        <div class="mb-3">
+                            <label for="lot" class="form-label">raison</label>
+                            <textarea name="raison" class="form-control" id="raison"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dateAjout" class="form-label">date d'ajout </label>
+                            <input type="date" class="form-control" id="dateAjout" name="dateAjout" required>
+                        </div>
+
+
+                        
+                        
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

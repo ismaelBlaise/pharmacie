@@ -1,0 +1,48 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title">Liste des ventes : 
+                        
+                    </h5>
+                   
+                </div>
+                
+                <div class="card-body">
+                    
+                     <!-- Table -->
+                     <table class="table table-bordered table-striped" style="font-size: 15px;">
+                        <thead class="table-light">
+                            <tr>
+                               
+                                <th>Medicament</th>
+                                <th>Laboratoire</th>
+                                <th>Lot</th>
+                                <th>Prix</th>
+                                <th>quantite</th>
+                                <!-- <th>Date de fabrication</th>
+                                <th>Date d'expiration</th> -->
+                                <th>Date de vente</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             
+                            <tr th:each="mouvementStock : ${mouvementStocks}">
+                                <td th:text="${mouvementStock.stock.medicamentFiche.medicament.nomCommercial}+','+${mouvementStock.stock.medicamentFiche.dosage}+' mg,'+${mouvementStock.stock.medicamentFiche.forme.forme}+','+${mouvementStock.stock.medicamentFiche.typeMedicament.typeMedicament}"></td>
+                                <td th:text="${mouvementStock.stock.laboratoire.nom}"></td>
+                                <td th:text="${mouvementStock.stock.lot}"></td>
+                                <td th:text="${mouvementStock.stock.prix}"></td>
+                                <td th:text="${mouvementStock.quantite}"></td>
+                                <!-- <td th:text="${mouvementStock.stock.dateFabrication}"></td>
+                                <td th:text="${mouvementStock.stock.dateExpiration}"></td> -->
+                                <td th:text="${mouvementStock.dateMouvement}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

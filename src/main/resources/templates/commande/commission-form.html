@@ -1,0 +1,41 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Rechercher les commandes avec commission</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Messages de succès ou d'erreur -->
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <!-- Formulaire -->
+                    <form action="/commandes/commission" method="POST">
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Date de début</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="endDate" class="form-label">Date de fin</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vendeurId" class="form-label">Vendeur</label>
+                            <select class="form-select" id="vendeurId" name="vendeurId" required>
+                                <th:block th:each="vendeur : ${utilisateurs}">
+                                    <option th:value="${vendeur.idUtilisateur}" th:text="${vendeur.nom}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

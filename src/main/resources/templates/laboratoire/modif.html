@@ -1,0 +1,33 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Modifier laboratoire</h5>
+                </div>
+                
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/laboratoires/modifier" method="POST">
+                        <input type="hidden" id="idLaboratoire" name="idLaboratoire" th:value="${laboratoire.idLaboratoire}">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom du laboratoire</label>
+                            <input type="text" class="form-control" id="nom" name="nom" th:value="${laboratoire.nom}" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <a href="/laboratoires">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

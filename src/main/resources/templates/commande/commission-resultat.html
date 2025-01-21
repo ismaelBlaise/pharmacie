@@ -1,0 +1,53 @@
+<section class="section py-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- Card -->
+            <div class="card shadow-lg">
+                <!-- Card Header -->
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0" style="color:white;">Résultat </h5>
+                </div>
+                <!-- Card Content -->
+                <div class="card-body">
+                    <!-- Résumé -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Somme des ventes : </strong><span th:text="${sommeVente}" class="text-success"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Somme des commissions : </strong><span th:text="${sommeCommission}" class="text-danger"></span></p>
+                        </div>
+                    </div>
+
+                    <!-- Tableau des commandes -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Vendeur</th>
+                                    <th>Prix de la vente</th>
+                                    <th>Prix de la commission</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="commande : ${commandes}">
+                                    <td th:text="${commande.utilisateurVendeur.nom}"></td>
+                                    <td th:text="${commande.prixTotal}" class="text-end"></td>
+                                    <td th:text="${commande.commission}" class="text-end text-danger"></td>
+                                    <td th:text="${commande.dateCommande}" class="text-center"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Card Footer -->
+                <div class="card-footer text-center">
+                    <a href="/commandes/commission-form" class="btn btn-secondary">
+                        <i class="bi bi-search"></i> Nouvelle Recherche
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

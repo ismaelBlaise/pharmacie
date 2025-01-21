@@ -1,0 +1,63 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Ajouter un traitement</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/traitements" method="POST" enctype="multipart/form-data">
+                       
+                        <input type="hidden" name="idMaladie" th:value="${maladie.idMaladie}">
+                        <div class="mb-3">
+                            <label for="medicament" class="form-label">Medicament</label>
+                            <select class="form-select" id="medicament" name="idMedicamentFiche" required>
+                                <th:block th:each="fiche : ${fiches}">
+                                    <option th:value="${fiche.idMedicamentFiche}" th:text="${fiche.medicament.nomCommercial}+','+${fiche.dosage}+' mg,'+${fiche.forme.forme}+','+${fiche.typeMedicament.typeMedicament}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                         
+                         <div class="mb-3">
+                            <label for="dose" class="form-label">dose</label>
+                            <input type="number" class="form-control" step="0.01" id="dose" name="dose" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="frequence" class="form-label">frequence (/j)</label>
+                            <input type="number" class="form-control" id="frequence" name="frequence" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="moment" class="form-label">moment</label>
+                            <input type="text" class="form-control" id="moment" name="moment" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="duree" class="form-label">duree (/j)</label>
+                            <input type="number" class="form-control" step="0.01" id="duree" name="duree" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Instruction" class="form-label">Instruction </label>
+                            <textarea name="instruction" id="instruction"  class="form-control"></textarea>
+                            
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <a th:href="@{/traitements/recuperer(idMaladie=${maladie.idMaladie})}">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
