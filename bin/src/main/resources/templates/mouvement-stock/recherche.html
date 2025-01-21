@@ -1,0 +1,43 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Recherche des Vente</h5>
+                </div>
+                
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/mouvements-stock/rechercher" method="POST">
+                        <div class="mb-3">
+                            <label for="voieAdministration" class="form-label">voieAdministration</label>
+                            <select class="form-select" id="voieAdministration" name="idVoieAdministration" required>
+                                <th:block th:each="voieAdministration : ${voieAdministrations}">
+                                    <option th:value="${voieAdministration.idVoieAdministration}" th:text="${voieAdministration.voieAdministration}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Categorie d'age</label>
+                            <select class="form-select" id="age" name="age" required>
+                                <option value="4-10">Enfant</option>
+                                <option value="11-18">Adolescent</option>
+                                <option value="19-100">Adulte</option>
+                                
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

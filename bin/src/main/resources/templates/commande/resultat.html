@@ -1,0 +1,31 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Résultat</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Date de commande</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="commande : ${commandes}">
+                                <td th:text="${commande.utilisateur.nom}"></td>
+                                <td th:text="${commande.dateCommande}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <a href="/commandes/recherche-form" class="btn btn-secondary">Nouvelle Recherche</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

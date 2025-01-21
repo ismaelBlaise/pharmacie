@@ -1,0 +1,40 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Modifier forme</h5>
+                </div>
+                
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/formes/modifier" method="POST">
+                        <input type="hidden" id="idForme" name="idForme" th:value="${forme.idForme}">
+                        <div class="mb-3">
+                            <label for="forme" class="form-label">forme</label>
+                            <input type="text" class="form-control" id="forme" name="forme" th:value="${forme.forme}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="voieAdministration" class="form-label">Voie d'Administration</label>
+                            <select class="form-select" id="voieAdministration" name="idVoieAdministration" required>
+                                <th:block th:each="voie : ${voies}">
+                                    <option th:value="${voie.idVoieAdministration}" th:selected="${voie.idVoieAdministration == forme.voieAdministration.idVoieAdministration}" th:text="${voie.voieAdministration}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                        <a href="/formes">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

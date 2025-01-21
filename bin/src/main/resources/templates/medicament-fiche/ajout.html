@@ -1,0 +1,78 @@
+<section class="section">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <!-- Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Ajouter une Fiche Médicament</h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error != null}">
+                        <p th:text="${error}"></p>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${success != null}">
+                        <p th:text="${success}"></p>
+                    </div>
+                    <form action="/medicament-fiches" method="POST" enctype="multipart/form-data">
+                        <!-- Photo -->
+                        <div class="mb-3">
+                            <label for="photo" class="form-label">Photo</label>
+                            <input type="file" class="form-control" id="photo" name="photo" required>
+                        </div>
+                        <!-- Dosage -->
+                        <div class="mb-3">
+                            <label for="dosage" class="form-label">Dosage</label>
+                            <input type="number" class="form-control" id="dosage" name="dosage" step="0.01" placeholder="Entrez le dosage" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" placeholder="min" class="form-control" id="ageMin" name="ageMin"   required>
+                            <input type="number" placeholder="max" class="form-control" id="ageMax" name="ageMax"   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Poid" class="form-label">Poid</label>
+                            <input type="number" placeholder="min" class="form-control" id="poidMin" name="poidMin" required>
+                            <input type="number" placeholder="max" class="form-control" id="poidMax" name="poidMax"  required>
+                        </div>
+
+                        <!-- Sélecteurs dynamiques -->
+                        <div class="mb-3">
+                            <label for="medicament" class="form-label">Médicament</label>
+                            <select class="form-select" id="medicament" name="idMedicament" required>
+                                <th:block th:each="med : ${medicaments}">
+                                    <option th:value="${med.idMedicament}" th:text="${med.nomCommercial}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="forme" class="form-label">Forme</label>
+                            <select class="form-select" id="forme" name="idForme" required>
+                                <th:block th:each="form : ${formes}">
+                                    <option th:value="${form.idForme}" th:text="${form.forme}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="typeMedicament" class="form-label">Type de Médicament</label>
+                            <select class="form-select" id="typeMedicament" name="idTypeMedicament" required>
+                                <th:block th:each="type : ${types}">
+                                    <option th:value="${type.idTypeMedicament}" th:text="${type.typeMedicament}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="indication" class="form-label">Indication</label>
+                            <textarea  id="indication" name="indication" class="form-control" style="height: 100px"  required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                        <a href="/medicament-fiches">
+                            <button type="button" class="btn btn-secondary">Retour</button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
