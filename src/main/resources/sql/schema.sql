@@ -13,6 +13,15 @@ CREATE TABLE sexes(
    UNIQUE(sexe)
 );
 
+CREATE TABLE config(
+   Id_config SERIAL,
+   cle VARCHAR(250)  NOT NULL,
+   val VARCHAR(250)  NOT NULL,
+   PRIMARY KEY(Id_config),
+   UNIQUE(cle)
+);
+
+
 CREATE TABLE roles(
    Id_roles SERIAL,
    role VARCHAR(50)  NOT NULL,
@@ -125,6 +134,7 @@ CREATE TABLE commandes(
    Id_statut_commande INTEGER NOT NULL,
    Id_paniers INTEGER NOT NULL,
    Id_utilisateurs_1 INTEGER NOT NULL,
+   commission DECIMAL(15,3),
    PRIMARY KEY(Id_commandes),
    FOREIGN KEY(Id_utilisateurs) REFERENCES utilisateurs(Id_utilisateurs),
    FOREIGN KEY(Id_statut_commande) REFERENCES statut_commande(Id_statut_commande),

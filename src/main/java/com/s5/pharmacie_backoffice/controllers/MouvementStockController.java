@@ -18,6 +18,7 @@ import com.s5.pharmacie_backoffice.models.Panier;
 import com.s5.pharmacie_backoffice.models.StatutCommande;
 import com.s5.pharmacie_backoffice.models.Stock;
 import com.s5.pharmacie_backoffice.models.TypeMouvement;
+import com.s5.pharmacie_backoffice.models.Config;
 import com.s5.pharmacie_backoffice.repositories.*;
 import com.s5.pharmacie_backoffice.services.MedicamentFicheService;
 import com.s5.pharmacie_backoffice.services.MouvementStockService;
@@ -43,6 +44,9 @@ public class MouvementStockController {
 
     @Autowired
     private FormeRepository formeRepository;
+
+    @Autowired 
+    private ConfigRepository configRepository;
 
     @Autowired
     private VoieAdministrationService voieAdministrationService;
@@ -147,18 +151,38 @@ public class MouvementStockController {
             commande.setPanier(null);
             commande.setStatutCommande(statutCommande);
             commande.setPanier(panier);
+            
+            Config config=configRepository.findByCle("commission").get();
+                
+                Config configMax=configRepository.findByCle("commission-vente").get();
+                if(configMax==null || config==null){
+                    throw new Exception("Les configs de commission n'existe pas");
+                }
+                double commission=Double.parseDouble(config.getVal());
+                double commissionVente=Double.parseDouble(configMax.getVal());
+
+                if(commande.getPrixTotal().doubleValue()>commissionVente){
+                    commande.setCommission(commande.getPrixTotal().doubleValue()*commission);
+                }
+                else{
+                    commande.setCommission(0);
+                }
             commandeRepository.save(commande);
-        
-            modelAndView.addObject("utilisateurs",uR.findAll());
+            modelAndView.addObject("mouvementStocks",mouvementStockRepository.findByTypeMouvement(typeMouvement));
+            modelAndView.addObject("utilisateurs",uR.findUtilisateursByRoleName("Utilisateur"));
+    
+            modelAndView.addObject("utilisateursV",uR.findUtilisateursByRoleName("Vendeur"));
             modelAndView.addObject("success","Vente ajouter avec succees");
             return modelAndView;
        } catch (Exception e) {
             ModelAndView modelAndView=new ModelAndView("template");
             modelAndView.addObject("page","mouvement-stock/vente");
-            modelAndView.addObject("utilisateurs",uR.findAll());
+            modelAndView.addObject("utilisateurs",uR.findUtilisateursByRoleName("Utilisateur"));
+    
+            modelAndView.addObject("utilisateursV",uR.findUtilisateursByRoleName("Vendeur"));
             modelAndView.addObject("fiches", medicamentFicheService.recupererMedicamentFiches());
             TypeMouvement typeMouvement=typeMouvementRepository.findByTypeMouvement("Vente").get();
-        modelAndView.addObject("mouvementStocks",mouvementStockRepository.findByTypeMouvement(typeMouvement));
+            modelAndView.addObject("mouvementStocks",mouvementStockRepository.findByTypeMouvement(typeMouvement));
             modelAndView.addObject("error",e.getMessage());
         return modelAndView;
        }

@@ -39,6 +39,6 @@ public class Commande {
     @JoinColumn(name = "Id_utilisateurs_1", nullable = false)
     private Utilisateur utilisateurVendeur;
 
-    @Transient
+    @Column(name = "commission", nullable = false)
     private double commission;
 }

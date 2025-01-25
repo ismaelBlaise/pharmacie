@@ -15,6 +15,9 @@ INSERT INTO utilisateurs (nom, prenoms, email, adresse, mdp, poids, date_naissan
 
 INSERT INTO types_mouvement(type_mouvement) VALUES('Vente'),('Achat');
 
+INSERT INTO config(cle,val) VALUES('commission','0.05');
+
+INSERT INTO config(cle,val) VALUES('commission-vente','200000');
 
 INSERT INTO types_medicament (type_medicament) VALUES 
 ('Antibiotique'), 

@@ -27,8 +27,19 @@
                         <div class="mb-3">
                             <label for="vendeurId" class="form-label">Vendeur</label>
                             <select class="form-select" id="vendeurId" name="vendeurId" required>
+                                <option value="0">Tous</option>
                                 <th:block th:each="vendeur : ${utilisateurs}">
                                     <option th:value="${vendeur.idUtilisateur}" th:text="${vendeur.nom}"></option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sexe" class="form-label">Sexe</label>
+                            <select class="form-select" id="sexe" name="idSexe" required>
+                                <!-- Remplissage dynamique des sexes -->
+                                <option value="0">Tous</option>
+                                <th:block th:each="sexe : ${sexes}">
+                                    <option th:value="${sexe.idSexe}" th:text="${sexe.sexe}"></option>
                                 </th:block>
                             </select>
                         </div>

@@ -7,15 +7,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.s5.pharmacie_backoffice.models.Commande;
+import com.s5.pharmacie_backoffice.repositories.ConfigRepository;
+import com.s5.pharmacie_backoffice.repositories.SexeRepository;
 import com.s5.pharmacie_backoffice.repositories.UtilisateurRepository;
 import com.s5.pharmacie_backoffice.services.CommandeService;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/commandes")
 public class CommandeController {
+
+   
+    @Autowired
+    private ConfigRepository configRepository;
 
     @Autowired
     private CommandeService commandeService;
@@ -23,6 +30,8 @@ public class CommandeController {
     @Autowired
     private UtilisateurRepository utilisateurRepository;
 
+    @Autowired 
+    private SexeRepository sexeRepository;
     
     @GetMapping("/recherche-form")
     public ModelAndView rechercheForm(){
@@ -43,6 +52,7 @@ public class CommandeController {
     @GetMapping("/commission-form")
     public ModelAndView commmissionForm(){
         ModelAndView modelAndView=new ModelAndView("template");
+        modelAndView.addObject("sexes", sexeRepository.findAll());
         modelAndView.addObject("page","commande/commission-form");
         modelAndView.addObject("utilisateurs",utilisateurRepository.findUtilisateursByRoleName("Vendeur"));
         return modelAndView;
@@ -52,19 +62,28 @@ public class CommandeController {
     public ModelAndView getCommandesAvecCommission(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
-            @RequestParam Long vendeurId
+            @RequestParam Long vendeurId, @RequestParam Long idSexe 
     ) {
         try {
             List<Commande> commandes=commandeService.commission(startDate, endDate, vendeurId);
+            commandes=commandeService.filtrerParGenre(commandes, idSexe);
             ModelAndView modelAndView=new ModelAndView("template");
+            if(idSexe== 0 ){
+                modelAndView.addObject("genre", "tous");   
+            }
+            else{ 
+                modelAndView.addObject("genre", sexeRepository.findById(idSexe).get().getSexe());
+            }
             modelAndView.addObject("page","commande/commission-resultat");
             modelAndView.addObject("commandes", commandes);
+            // modelAndView.addObject("", modelAndView)
             modelAndView.addObject("sommeVente",commandeService.sommeVente(commandes));
             modelAndView.addObject("sommeCommission",commandeService.sommeCommission(commandes));
 
             return modelAndView;
         } catch (Exception e) {
             ModelAndView modelAndView=new ModelAndView("template");
+            modelAndView.addObject("sexes", sexeRepository.findAll());
             modelAndView.addObject("page","commande/commission-form");
             modelAndView.addObject("utilisateurs",utilisateurRepository.findUtilisateursByRoleName("Vendeur"));
             // modelAndView.addObject("commandes", commandeService.commission(startDate, endDate, vendeurId));

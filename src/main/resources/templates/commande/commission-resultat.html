@@ -5,7 +5,7 @@
             <div class="card shadow-lg">
                 <!-- Card Header -->
                 <div class="card-header bg-primary text-white">
-                    <h5 class="card-title mb-0" style="color:white;">Résultat </h5>
+                    <h5 class="card-title mb-0" style="color:white;">Résultat pour : <p th:text="${genre}"></p></h5>
                 </div>
                 <!-- Card Content -->
                 <div class="card-body">
@@ -15,7 +15,7 @@
                             <p><strong>Somme des ventes : </strong><span th:text="${sommeVente}" class="text-success"></span></p>
                         </div>
                         <div class="col-md-6">
-                            <p><strong>Somme des commissions : </strong><span th:text="${sommeCommission}" class="text-danger"></span></p>
+                            <p><strong>Somme des commissions(5%) : </strong><span th:text="${sommeCommission}" class="text-danger"></span></p>
                         </div>
                     </div>
 

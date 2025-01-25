@@ -19,6 +19,8 @@ public class CommandeService {
     @Autowired
     private StatutCommandeRepository statutR;
 
+    @Autowired 
+    private ConfigRepository configRepository;
     // Méthode pour récupérer les utilisateurs ayant acheté à une date donnée
     public List<Commande> getClientsByDate(LocalDate date) {
         List<Commande> commandes = commandeRepository.findByDateCommande(date);
@@ -32,15 +34,46 @@ public class CommandeService {
         return commandesRet;
     }
     
-    public List<Commande> commission(LocalDate startDate, LocalDate endDate, Long vendeurId) {
-        List<Commande> commandes = commandeRepository.findByDateRangeAndVendeur(startDate, endDate, vendeurId);
-        Optional<StatutCommande> statutCommande=statutR.findByStatut("valider");
-        for(Commande commande:commandes){
-            if(commande.getStatutCommande().getId()==statutCommande.get().getId()){
-                commande.setCommission(commande.getPrixTotal().doubleValue()*0.05);
-            }
-            
+    public List<Commande> commission(LocalDate startDate, LocalDate endDate, Long vendeurId) throws Exception {
+        // if(startDate==null && endDate!=null){
+        //     return commandeRepository.findByEndDate(endDate);
+        // }
+        // else if(endDate==null && startDate!=null){
+        //     return commandeRepository.findByStartDate(startDate);
+        // }
+        // else if(startDate==null && endDate==null){
+        //     return commandeRepository.findAll();
+        // }
+
+        List<Commande> commandes = null;
+        if(vendeurId == 0 ){
+            commandes = commandeRepository.findByDateRange(startDate, endDate);
         }
+        else{
+            commandes = commandeRepository.findByDateRangeAndVendeur(startDate, endDate, vendeurId);
+        }
+        // Optional<StatutCommande> statutCommande=statutR.findByStatut("valider");
+        // for(Commande commande:commandes){
+
+        //     if(commande.getStatutCommande().getId()==statutCommande.get().getId()){
+        //         Config config=configRepository.findByCle("commission").get();
+                
+        //         Config configMax=configRepository.findByCle("commission-vente").get();
+        //         if(configMax==null || config==null){
+        //             throw new Exception("Les configs de commission n'existe pas");
+        //         }
+        //         double commission=Double.parseDouble(config.getVal());
+        //         double commissionVente=Double.parseDouble(configMax.getVal());
+
+        //         if(commande.getPrixTotal().doubleValue()>commissionVente){
+        //             commande.setCommission(commande.getPrixTotal().doubleValue()*commission);
+        //         }
+        //         else{
+        //             commande.setCommission(0);
+        //         }
+        //     }
+            
+        // }
         return commandes;
     }
 
@@ -58,5 +91,18 @@ public class CommandeService {
             somme+=commande.getCommission();
         }
         return somme;
+    }
+
+    public List<Commande> filtrerParGenre(List<Commande> commandes, Long idSexe){
+        List<Commande> commandesRet = new ArrayList<>();
+        if(idSexe == 0){
+            return commandes;
+        }
+        for(Commande commande : commandes){
+            if(commande.getUtilisateurVendeur().getSexe().getIdSexe()== idSexe ){
+                commandesRet.add(commande);
+            }
+        }
+        return commandesRet;
     }
 }
