@@ -10,6 +10,7 @@ import com.s5.pharmacie_backoffice.repositories.*;
 import java.time.LocalDate;
 import java.util.*;
 
+@SuppressWarnings("unused")
 @Service
 public class CommandeService {
 
@@ -19,6 +20,7 @@ public class CommandeService {
     @Autowired
     private StatutCommandeRepository statutR;
 
+    
     @Autowired 
     private ConfigRepository configRepository;
     // Méthode pour récupérer les utilisateurs ayant acheté à une date donnée
