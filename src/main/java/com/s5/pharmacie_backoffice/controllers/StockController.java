@@ -68,6 +68,8 @@ public class StockController {
             prixMedicament.setMedicamentFiche(medicamentFicheService.recupererMedicamentFiche(idMedicamentFiche));
             prixMedicament.setMontant(montant);
             prixMedicamentRepository.save(prixMedicament);
+            modelAndView.addObject("page","prix-medicament/ajout");
+            modelAndView.addObject("fiches", medicamentFicheService.recupererMedicamentFiches());
             modelAndView.addObject("success", "prix ajouter avec success");
             
             return modelAndView;
@@ -81,10 +83,35 @@ public class StockController {
         }
     }
 
+    // @PostMapping("/historique")
+    // public ModelAndView getCommandesAvecCommission(
+    //         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+    //         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+    //         @RequestParam Long idMedicamentFiche
+    // ) {
+    //     try {
+            
+    //         ModelAndView modelAndView=new ModelAndView("template");
+            
+    //         modelAndView.addObject("page","stock/historique-prix");
+    //         modelAndView.addObject("stocks",prixMedicamentRepository.findByDateRangeAndMedicament(startDate, endDate, idMedicamentFiche));
+    //         modelAndView.addObject("fiche",medicamentFicheService.recupererMedicamentFiche(idMedicamentFiche));
+    //         // modelAndView.addObject("stocks", stockRepository.findByDateRangeAndMedicament(startDate, endDate, idMedicamentFiche));
+            
+    //         return modelAndView;
+    //     } catch (Exception e) {
+            
+    //         ModelAndView modelAndView=new ModelAndView("template");
+    //         modelAndView.addObject("page","stock/historique-prix-form");
+    //         modelAndView.addObject("fiches", medicamentFicheService.recupererMedicamentFiches());
+    //         modelAndView.addObject("error", e.getMessage());
+    //         return modelAndView;
+    //     }
+    // }
+
+
     @PostMapping("/historique")
     public ModelAndView getCommandesAvecCommission(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @RequestParam Long idMedicamentFiche
     ) {
         try {
@@ -92,7 +119,7 @@ public class StockController {
             ModelAndView modelAndView=new ModelAndView("template");
             
             modelAndView.addObject("page","stock/historique-prix");
-            modelAndView.addObject("stocks",prixMedicamentRepository.findByDateRangeAndMedicament(startDate, endDate, idMedicamentFiche));
+            modelAndView.addObject("stocks",prixMedicamentRepository.findAllPricesByMedicament(idMedicamentFiche));
             modelAndView.addObject("fiche",medicamentFicheService.recupererMedicamentFiche(idMedicamentFiche));
             // modelAndView.addObject("stocks", stockRepository.findByDateRangeAndMedicament(startDate, endDate, idMedicamentFiche));
             
@@ -106,7 +133,6 @@ public class StockController {
             return modelAndView;
         }
     }
-
 
     @PostMapping("/suivre")
     public ModelAndView suivre(@RequestParam Long idMedicamentFiche){

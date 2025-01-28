@@ -25,6 +25,6 @@ public class PrixMedicament {
     @JoinColumn(name = "Id_medicament_fiches", nullable = false)
     private MedicamentFiche medicamentFiche;
 
-    @Column(name = "date_chamgement")
+    @Column(name = "date_changement")
     private Date dateChangement;
 }

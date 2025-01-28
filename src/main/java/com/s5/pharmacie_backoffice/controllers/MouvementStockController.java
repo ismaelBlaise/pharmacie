@@ -142,6 +142,7 @@ public class MouvementStockController {
             }
             // double prixTotal=mouvementStockService.prixTotal(mouvementStocks);
             double prixTotal=prixMedicamentRepository.findMostRecentPrice(idMedicamentFiche).getMontant().doubleValue()*quantite.intValue();
+            // double prixTotal=prixMedicamentRepository.findMostRecentPrice2(idMedicamentFiche,dateVente.toLocalDate()).getMontant().doubleValue()*quantite.intValue();
 
             DetailPanier detailPanier=new DetailPanier();
             detailPanier.setQuantite(quantite);
