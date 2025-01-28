@@ -4,7 +4,7 @@
             <!-- Card -->
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Rechercher les commandes avec commission</h5>
+                    <h5 class="card-title">Rechercher des commandes avec commission</h5>
                 </div>
                 <div class="card-body">
                     <!-- Messages de succès ou d'erreur -->
@@ -27,17 +27,17 @@
                         <div class="mb-3">
                             <label for="vendeurId" class="form-label">Vendeur</label>
                             <select class="form-select" id="vendeurId" name="vendeurId" required>
-                                <option value="0">Tous</option>
+                                <option value="0">Tous les vendeurs</option>
                                 <th:block th:each="vendeur : ${utilisateurs}">
                                     <option th:value="${vendeur.idUtilisateur}" th:text="${vendeur.nom}"></option>
                                 </th:block>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="sexe" class="form-label">Sexe</label>
+                            <label for="sexe" class="form-label">Genre</label>
                             <select class="form-select" id="sexe" name="idSexe" required>
                                 <!-- Remplissage dynamique des sexes -->
-                                <option value="0">Tous</option>
+                                <option value="0">Tous les genres</option>
                                 <th:block th:each="sexe : ${sexes}">
                                     <option th:value="${sexe.idSexe}" th:text="${sexe.sexe}"></option>
                                 </th:block>
