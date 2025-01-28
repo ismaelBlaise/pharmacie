@@ -14,7 +14,7 @@ public interface CommandeRepository extends JpaRepository<Commande, Long> {
     
     List<Commande> findByDateCommande(LocalDate dateCommande);
     
-    @Query("SELECT c FROM Commande c WHERE c.dateCommande BETWEEN :startDate AND :endDate AND c.utilisateurVendeur.id = :vendeurId")
+    @Query("SELECT c FROM Commande c WHERE c.dateCommande BETWEEN :startDate AND :endDate AND c.utilisateurVendeur.idUtilisateur = :vendeurId")
     List<Commande> findByDateRangeAndVendeur(@Param("startDate") LocalDate startDate, 
                                              @Param("endDate") LocalDate endDate, 
                                              @Param("vendeurId") Long vendeurId);

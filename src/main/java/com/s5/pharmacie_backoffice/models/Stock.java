@@ -31,6 +31,9 @@ public class Stock {
     @Column(name="prix")
     private BigDecimal prix;
 
+    @Column(name="prix_achat")
+    private BigDecimal prixAchat;
+
     @Column(name="date_fabrication")
     private Date dateFabrication;
 

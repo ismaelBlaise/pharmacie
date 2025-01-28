@@ -104,7 +104,7 @@ public class MouvementStockService {
         return prixTotal;
     }
 
-    public void achatMedicament(MedicamentFiche medicamentFiche, String lot, BigDecimal prix, Date dateFabrication, 
+    public void achatMedicament(MedicamentFiche medicamentFiche, String lot, BigDecimal prix, BigDecimal prixAchat, Date dateFabrication, 
                                 Date dateExpiration, Laboratoire laboratoire, Integer quantite, Date dateAchat) throws IllegalArgumentException, Exception {
         
         if (medicamentFiche == null) {
@@ -151,6 +151,7 @@ public class MouvementStockService {
         stock.setQuantite(quantite);
         stock.setDateStock(dateAchat);
         stock.setPrix(prix);
+        stock.setPrixAchat(prixAchat);
         stock.setMedicamentFiche(medicamentFiche);
 
          

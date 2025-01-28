@@ -73,6 +73,9 @@ public class MouvementStockController {
     private PanierRepository panierRepository;
 
     @Autowired
+    private PrixMedicamentRepository prixMedicamentRepository;
+
+    @Autowired
     private CommandeRepository commandeRepository;
     @GetMapping("/achat-form")
     public ModelAndView achat() {
@@ -137,7 +140,9 @@ public class MouvementStockController {
             }else{
                 panier.setEtat(false);
             }
-            double prixTotal=mouvementStockService.prixTotal(mouvementStocks);
+            // double prixTotal=mouvementStockService.prixTotal(mouvementStocks);
+            double prixTotal=prixMedicamentRepository.findMostRecentPrice(idMedicamentFiche).getMontant().doubleValue()*quantite.intValue();
+
             DetailPanier detailPanier=new DetailPanier();
             detailPanier.setQuantite(quantite);
             detailPanier.setPanier(panier);
@@ -190,9 +195,9 @@ public class MouvementStockController {
 
 
     @PostMapping("/ajouter-achat")
-    public ModelAndView ajouterAchat(@RequestParam Long idMedicamentFiche,@RequestParam Long idLaboratoire,@RequestParam String lot,@RequestParam BigDecimal prix,@RequestParam Date dateFabrication,@RequestParam Date dateExpiration,@RequestParam Integer quantite,@RequestParam Date dateAchat ) {
+    public ModelAndView ajouterAchat(@RequestParam Long idMedicamentFiche,@RequestParam Long idLaboratoire,@RequestParam String lot,@RequestParam BigDecimal prix,@RequestParam BigDecimal prixAchat,@RequestParam Date dateFabrication,@RequestParam Date dateExpiration,@RequestParam Integer quantite,@RequestParam Date dateAchat ) {
        try {
-            mouvementStockService.achatMedicament(medicamentFicheService.recupererMedicamentFiche(idMedicamentFiche), lot, prix, dateFabrication, dateExpiration,laboratoireRepository.findById(idLaboratoire).get(),quantite, dateAchat);
+            mouvementStockService.achatMedicament(medicamentFicheService.recupererMedicamentFiche(idMedicamentFiche), lot, prix, prixAchat,dateFabrication, dateExpiration,laboratoireRepository.findById(idLaboratoire).get(),quantite, dateAchat);
             ModelAndView modelAndView=new ModelAndView("template");
             modelAndView.addObject("page","mouvement-stock/achat");
             modelAndView.addObject("laboratoires",laboratoireRepository.findAll());

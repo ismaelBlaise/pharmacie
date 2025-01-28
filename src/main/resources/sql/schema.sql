@@ -13,15 +13,6 @@ CREATE TABLE sexes(
    UNIQUE(sexe)
 );
 
-CREATE TABLE config(
-   Id_config SERIAL,
-   cle VARCHAR(250)  NOT NULL,
-   val VARCHAR(250)  NOT NULL,
-   PRIMARY KEY(Id_config),
-   UNIQUE(cle)
-);
-
-
 CREATE TABLE roles(
    Id_roles SERIAL,
    role VARCHAR(50)  NOT NULL,
@@ -91,6 +82,14 @@ CREATE TABLE types_mouvement(
    UNIQUE(type_mouvement)
 );
 
+CREATE TABLE config(
+   Id_config SERIAL,
+   cle VARCHAR(250)  NOT NULL,
+   val VARCHAR(250)  NOT NULL,
+   PRIMARY KEY(Id_config),
+   UNIQUE(cle)
+);
+
 CREATE TABLE utilisateurs(
    Id_utilisateurs SERIAL,
    nom VARCHAR(150)  NOT NULL,
@@ -130,11 +129,11 @@ CREATE TABLE commandes(
    Id_commandes SERIAL,
    date_commande DATE NOT NULL,
    prix_total NUMERIC(15,3)   NOT NULL,
+   commission NUMERIC(15,3)   NOT NULL,
    Id_utilisateurs INTEGER NOT NULL,
    Id_statut_commande INTEGER NOT NULL,
    Id_paniers INTEGER NOT NULL,
    Id_utilisateurs_1 INTEGER NOT NULL,
-   commission DECIMAL(15,3),
    PRIMARY KEY(Id_commandes),
    FOREIGN KEY(Id_utilisateurs) REFERENCES utilisateurs(Id_utilisateurs),
    FOREIGN KEY(Id_statut_commande) REFERENCES statut_commande(Id_statut_commande),
@@ -184,10 +183,14 @@ CREATE TABLE recommandations(
    FOREIGN KEY(Id_medicament_fiches) REFERENCES medicament_fiches(Id_medicament_fiches)
 );
 
+
+
+
 CREATE TABLE stocks(
    Id_stocks SERIAL,
    lot VARCHAR(150)  NOT NULL,
    quantite INTEGER NOT NULL,
+   prix_achat NUMERIC(15,4)  ,
    prix NUMERIC(15,3)   NOT NULL,
    date_fabrication DATE,
    date_expiration DATE,
@@ -237,4 +240,15 @@ CREATE TABLE maladies_symptomes(
    PRIMARY KEY(Id_maladies, Id_symptomes),
    FOREIGN KEY(Id_maladies) REFERENCES maladies(Id_maladies),
    FOREIGN KEY(Id_symptomes) REFERENCES symptomes(Id_symptomes)
+);
+
+
+
+CREATE TABLE prix_medicament(
+   Id_prix_medicament SERIAL,
+   montant NUMERIC(15,3)   NOT NULL,
+   date_changement DATE NOT NULL,
+   Id_medicament_fiches INTEGER NOT NULL,
+   PRIMARY KEY(Id_prix_medicament),
+   FOREIGN KEY(Id_medicament_fiches) REFERENCES medicament_fiches(Id_medicament_fiches)
 );
